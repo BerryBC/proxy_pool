@@ -1,0 +1,18 @@
+{
+  "name": "node_http_proxy_pool",
+  "version": "1.0.0",
+  "description": "http代理池",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BerryBC",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "mongodb": "^3.1.12",
+    "superagent": "^4.1.0",
+    "superagent-cheerio": "^0.1.1",
+    "superagent-proxy": "^2.0.0"
+  }
+}
