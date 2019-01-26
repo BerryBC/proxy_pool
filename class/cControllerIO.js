@@ -127,7 +127,7 @@ class cControllerIO {
 	 * @param {requestCallback} [funCB=(err, result) => { }]
 	 * @memberof cControllerIO
 	 */
-	deleteOneProxy(objProxy, funCB = (err, result) => { }) {
+	deleteOneProxy(objProxy, funCB = (err, result) => { funCB(null, true); }) {
 		const that = this;
 		let arrFun = [];
 		for (let intI = 0; intI < that.objCTLIOMethod.length; intI++) {
