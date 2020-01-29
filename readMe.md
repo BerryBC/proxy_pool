@@ -4,6 +4,9 @@
 - [cheerio](https://github.com/cheeriojs/cheerio)
 - [node-mongodb-native](https://github.com/mongodb/node-mongodb-native)
 
+----
+> 我是分割线
+
 > # 2019-1-30
 
 ### 1. 我想起了其实我有时候想做爬虫
@@ -41,6 +44,8 @@
 ### 6.无聊如我还会有什么话题呢？
 其实我一开觉得我有很多东西写的，好像`箭头函数`、`js的类`、`async`等，但后来发现网上一大堆的，我就还是算了，我觉得要找到好工作，现在还是学`python`吧。
 
+----
+> 我是分割线
 
 > 2020-1-29
 
