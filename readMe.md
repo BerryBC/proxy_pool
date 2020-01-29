@@ -1,3 +1,9 @@
+# Dependencies
+- [async](https://github.com/caolan/async)
+- [superagent](https://github.com/visionmedia/superagent)
+- [cheerio](https://github.com/cheeriojs/cheerio)
+- [node-mongodb-native](https://github.com/mongodb/node-mongodb-native)
+
 > 2019-1-30
 
 # 1. 我想起了其实我有时候想做爬虫

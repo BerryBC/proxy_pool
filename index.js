@@ -4,7 +4,7 @@
  * @Version: 0.1.1
  * @Date: 2019-01-20 22:32:21
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-01-29 20:48:45
+ * @LastEditTime : 2020-01-29 21:43:01
  */
 //需要下载的库
 const async = require('async');
@@ -47,7 +47,7 @@ function funGoPro() {
         console.log((new Date().toString()) + ' 完成了爬代理网站。');
         setTimeout(() => {
             funGoPro();
-        }, (1000 * 60 * (objTimeConfig.spy[0] + Math.random() * objTimeConfig.spy[1])));
+        }, (1000 * 60 * 60 * (objTimeConfig.spy[0] + Math.random() * objTimeConfig.spy[1])));
     });
 };
 
@@ -60,8 +60,7 @@ function funVerifyProxy() {
                 console.log((new Date().toString()) + ' 保存完。');
                 setTimeout(() => {
                     funVerifyProxy();
-                    // }, (1000 * 60 * 60 * (objTimeConfig.verify[0] + Math.random() * objTimeConfig.verify[1])));
-                }, (1000 * 60 * (objTimeConfig.verify[0] + Math.random() * objTimeConfig.verify[1])));
+                }, (1000 * 60 * 60 * (objTimeConfig.verify[0] + Math.random() * objTimeConfig.verify[1])));
             });
         });
     });

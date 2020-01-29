@@ -4,7 +4,7 @@
  * @Author: BerryBC
  * @Date: 2019-01-23 09:31:36
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-01-29 20:32:29
+ * @LastEditTime : 2020-01-29 21:33:48
  */
 //需要下载的库
 const async = require('async');
@@ -46,7 +46,7 @@ class cControllerRequest {
                 that.objHeader.Cookie = '';
             }
             let strWebURL = that.arrPWS[objWhatWeb.ws].replace('*', objWhatWeb.pg);
-            request.get(strWebURL).set(that.objHeader).use(superagentCheerio).then((res) => {
+            request.get(strWebURL).set(that.objHeader).timeout({ response: that.intTimeout, deadline: that.intTimeout * 2 }).use(superagentCheerio).then((res) => {
                 if (!!res.header['set-cookie']) {
                     that.cookies[objWhatWeb.ws] = common.renewCookies(that.cookies[objWhatWeb.ws], res.header['set-cookie']);
                 };
@@ -107,7 +107,7 @@ class cControllerRequest {
         // request.get('http://www.89ip.cn/index_1.html').use(superagentCheerio).proxy(proxy).set(objHeader).then((res) => { });
         let funCheck = function(item, funCB) {
             let strProxy = 'http://' + item;
-            request.get('https://www.baidu.com').timeout({ response: that.intTimeout }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
+            request.get('https://www.baidu.com').timeout({ response: that.intTimeout, deadline: that.intTimeout * 2 }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
                 let objProxy = common.funStr2Obj(item);
                 ctlIO.cleanProxyFailTime(objProxy);
                 funCB(null, true);

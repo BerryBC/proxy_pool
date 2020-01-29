@@ -171,7 +171,7 @@ class cMongodbIO {
                     db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
                         if (!err) {
                             if (!!item) {
-                                let bolCDel = true;
+                                let bolCDel = false;
                                 if (item.fail >= 0) {
                                     if (item.fail < intMaxFailTime) {
                                         let intNowFail = item.fail + 1;
@@ -179,7 +179,11 @@ class cMongodbIO {
                                         db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": intNowFail } });
                                         client.close();
                                         bolCDel = false;
+                                    } else {
+                                        bolCDel = true;
                                     };
+                                } else {
+                                    bolCDel = true;
                                 };
                                 if (bolCDel) {
                                     that.deleteOneProxy(objProxy, funCB);
