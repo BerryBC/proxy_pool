@@ -4,25 +4,25 @@
 - [cheerio](https://github.com/cheeriojs/cheerio)
 - [node-mongodb-native](https://github.com/mongodb/node-mongodb-native)
 
-> 2019-1-30
+> # 2019-1-30
 
-# 1. 我想起了其实我有时候想做爬虫
+### 1. 我想起了其实我有时候想做爬虫
 `爬虫`很多人绕不开的一个事实就是会`封IP`，那么这个时候就需要一个`代理池`了（其实`代理池`是否有用我也不太清楚）。
 `代理池`我看网上很多方法做，我选择了最简单的--[NodeJs从零构建代理ip池（二）项目框架介绍与搭建](https://www.jianshu.com/p/a8922e1551ae)。
 
-# 2. 我也很想抄啊，但我想存在MongoDB中，所以只能改框架
+### 2. 我也很想抄啊，但我想存在MongoDB中，所以只能改框架
 直接抄是有点困难，于是只能看看写写，后来想出一个超级简单的框架。
-![超级简单的框架！](https://upload-images.jianshu.io/upload_images/14763760-301606efa758d78d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 图片看不到
 
-# 3. 主程序超级简单
+### 3. 主程序超级简单
 主程序就定义一个`请求函数`，一个`验证函数`和一个`初始函数`，然后请求和验证两个函数就在不断`setTimeout`的互相调用。
-![你觉不觉得我超级简单？](https://upload-images.jianshu.io/upload_images/14763760-ebfb5e6765a988cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 图片看不到
 
-# 4.ES6到底是什么？
+### 4.ES6到底是什么？
 说真的，看到要求那里都写着需求熟练`ES6`什么什么什么什么规范，我真不太清楚，到底`ES6`跟前期学的有什么不同呢？于是我就搜索了一下，结果，发现了一个神奇的东西：[《ECMAScript 6 入门》](http://es6.ruanyifeng.com/#README)，看完十分感动！
 于是我决定在这次机会浅浅的学习一下。
 
-# 5.还是先放源代码先
+### 5.还是先放源代码先
 源代码在[一个全球交友平台上](https://github.com/BerryBC/proxy_pool)。
 大体结构如下
 ```
@@ -38,19 +38,19 @@
 ```
 其实文件夹`IOEng`里面可以随时增加存储模块，然后在`cfg.json`里面增加存储模块的配置就行了。
 
-# 6.无聊如我还会有什么话题呢？
+### 6.无聊如我还会有什么话题呢？
 其实我一开觉得我有很多东西写的，好像`箭头函数`、`js的类`、`async`等，但后来发现网上一大堆的，我就还是算了，我觉得要找到好工作，现在还是学`python`吧。
 
 
 > 2020-1-29
 
-# 1.缘起
+### 1.缘起
 原本的`架构`介绍如下：
-[拾肆-NodeJS简单代理池（起）](https://www.jianshu.com/p/f0177911a9fb)
+[拾肆-NodeJS简单代理池（起）](https://blog.csdn.net/BerryBC/article/details/86700357)
 
 然后今天为了做其他需要把这个完善一下。
 
-# 2.配置文件
+### 2.配置文件
 原本就没用 `ini` 的`配置文件`存储方式，所以就用一个 `JSON` 文件存储配置，其中代码如下：
 ```js
 /**
@@ -101,7 +101,7 @@ function funInit() {
 }
 ```
 
-# 3.保存时加入时间
+### 3.保存时加入时间
 原本保存的内容只有两个内容：
 ```js
 ProxyContent:[
@@ -122,7 +122,7 @@ ProxyContent:[
 ]
 ```
 
-# 4.修改检测数据库是否存在该代理
+### 4.修改检测数据库是否存在该代理
 因为前期存入`数据库`只存入`代理地址`、`代理端口`，故在新增字段之后是会检测不到存在的，所以只能修改为查找数据库时只查找`地址`以及`端口`，以针对 `MongoDB` 的`驱动`为例，修改一下：
 ```
 //修改前
@@ -140,14 +140,14 @@ checkProxyExist(objProxy = {}, funCB) {
     };
 ```
 
-# 5.修改循环流程
+### 5.修改循环流程
 原本的`流程`图为：
-![原始的流程图](https://upload-images.jianshu.io/upload_images/14763760-bd827aab6e7f934f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 图片看不到
 
 更改后的流程图：
-![好像很复杂](https://upload-images.jianshu.io/upload_images/14763760-fa18645521104000.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+> 图片看不到
 
-# 6.修改这个算是完成了吧
+### 6.修改这个算是完成了吧
 测试好像还需要一段时间，就先整理一下今天要做的事情：
 
 - [x] 把前期做的代理池修改一下
