@@ -4,7 +4,7 @@
  * @Author: BerryBC
  * @Date: 2019-01-23 09:31:36
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-02-04 14:28:14
+ * @LastEditTime : 2020-02-04 16:44:30
  */
 //需要下载的库
 const async = require('async');
@@ -142,7 +142,7 @@ class cControllerRequest {
             });
         };
         let arrRandProxy = [];
-        for (let intJ = 0; intJ < 10; intJ++) {
+        for (let intJ = 0; intJ < 100; intJ++) {
             let strTestingIP = (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString();
             arrRandProxy.push(strTestingIP);
         }

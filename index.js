@@ -1,10 +1,10 @@
 /*
  * @Descripttion: 简易代理池主程序
  * @Author: BerryBC
- * @Version: 0.1.1
+ * @Version: 0.2.0
  * @Date: 2019-01-20 22:32:21
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-02-04 14:12:54
+ * @LastEditTime : 2020-02-04 14:57:51
  */
 //需要下载的库
 const async = require('async');
