@@ -4,7 +4,7 @@
  * @Author: BerryBC
  * @Date: 2019-01-23 09:31:36
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-02-02 23:03:28
+ * @LastEditTime : 2020-02-04 14:28:14
  */
 //需要下载的库
 const async = require('async');
@@ -103,8 +103,6 @@ class cControllerRequest {
      */
     verifyTheProxy(arrProxy, ctlIO, funCB) {
         let that = this;
-        // let strProxy = '127.0.0.1:64878';
-        // request.get('http://www.89ip.cn/index_1.html').use(superagentCheerio).proxy(proxy).set(objHeader).then((res) => { });
         let funCheck = function(item, funCB) {
             let strProxy = 'http://' + item;
             request.get('https://www.baidu.com').timeout({ response: that.intTimeout, deadline: that.intTimeout * 3 }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
@@ -122,6 +120,35 @@ class cControllerRequest {
         });
     };
 
-
+    /**
+     *爬随机代理，并存入输入输出控制器对象。
+     * @param {Object} objCTLSave 传入输入输出控制器对象
+     * @param {requestCallback} funCB 回传函数
+     * @memberof cControllerRequest
+     */
+    reqRandPro(objCTLSave, funCB) {
+        const that = this;
+        let funGoRandSpy = (strRandProxy, funCB) => {
+            // 上网看到很多高匿的代理都是9999端口的，就尝试一下随机测试网上所有9999端口呗
+            let strProxy = 'http://' + strRandProxy + ':9999';
+            // console.log('  testing :' + strProxy);
+            request.get('https://www.baidu.com').timeout({ response: that.intTimeout, deadline: that.intTimeout * 3 }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
+                let objProxyForSave = { u: strRandProxy, p: '9999' };
+                objCTLSave.saveOneProxy(objProxyForSave, () => {});
+                console.log('  ' + strProxy + '  测试居然通过！');
+                funCB(null, true);
+            }).catch((err) => {
+                funCB(null, true);
+            });
+        };
+        let arrRandProxy = [];
+        for (let intJ = 0; intJ < 10; intJ++) {
+            let strTestingIP = (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString();
+            arrRandProxy.push(strTestingIP);
+        }
+        async.eachLimit(arrRandProxy, 5, funGoRandSpy, (err) => {
+            funCB(err, true);
+        });
+    }
 }
 module.exports = cControllerRequest;

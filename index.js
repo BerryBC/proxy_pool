@@ -4,7 +4,7 @@
  * @Version: 0.1.1
  * @Date: 2019-01-20 22:32:21
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-01-29 21:43:01
+ * @LastEditTime : 2020-02-04 14:12:54
  */
 //需要下载的库
 const async = require('async');
@@ -40,6 +40,7 @@ function funInit() {
     console.log(' 完成初始化 ');
     funGoPro();
     funVerifyProxy();
+    funGoRandPro();
 };
 
 function funGoPro() {
@@ -48,6 +49,17 @@ function funGoPro() {
         setTimeout(() => {
             funGoPro();
         }, (1000 * 60 * 60 * (objTimeConfig.spy[0] + Math.random() * objTimeConfig.spy[1])));
+    });
+};
+
+
+
+function funGoRandPro() {
+    objCTSpy.reqRandPro(objCTLIO, (err, result) => {
+        console.log((new Date().toString()) + ' 完成了随机测试网上服务器。');
+        setTimeout(() => {
+            funGoRandPro();
+        }, (1000 * 60 * (objTimeConfig.spy[0] + Math.random() * objTimeConfig.spy[1])));
     });
 };
 
