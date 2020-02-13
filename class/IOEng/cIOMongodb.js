@@ -42,6 +42,7 @@ class cMongodbIO {
                                     };
                                 });
                             } else {
+                                client.close();
                                 funCB('error:in "saveOneProxyMongodb" after connect, err : ' + err);
                             };
                         });
@@ -79,6 +80,7 @@ class cMongodbIO {
                         };
                     });
                 } else {
+                    client.close();
                     funCB('error:in "checkProxyExistMongodb" after connect, err : ' + err);
                 };
             });
@@ -124,6 +126,7 @@ class cMongodbIO {
                     };
                 });
             } else {
+                client.close();
                 funCB('error:in "loadEveryProxyMongodb" after connect, err : ' + err);
             };
         });
@@ -147,6 +150,7 @@ class cMongodbIO {
                         funCB(null, true);
                     });
                 } else {
+                    client.close();
                     funCB('error:in "deleteOneProxyMongodb" after connect, err : ' + err);
                 }
             });
@@ -198,6 +202,7 @@ class cMongodbIO {
                         };
                     });
                 } else {
+                    client.close();
                     funCB('error:in "updateProxyFailTime" after connect, err : ' + err);
                 };
             });
@@ -235,6 +240,7 @@ class cMongodbIO {
                         };
                     });
                 } else {
+                    client.close();
                     funCB('error:in "cleanProxyFailTime" after connect, err : ' + err);
                 };
             });
