@@ -4,7 +4,7 @@
  * @Version: 0.2.0
  * @Date: 2019-01-20 22:32:21
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-02-04 14:57:51
+ * @LastEditTime : 2020-02-13 21:01:53
  */
 //需要下载的库
 const async = require('async');
@@ -37,10 +37,23 @@ function funInit() {
     objCTLIO = new cControllerIO(arrSaveSet, intCfgMaxFailTime);
     objCTSpy = new cControllerRequest(objWebCfg);
     objTimeConfig = objConfig.timeConfig;
-    console.log(' 完成初始化 ');
-    funGoPro();
-    funVerifyProxy();
-    funGoRandPro();
+    let intRetry = 0;
+    funStarMain();
+
+    function funStarMain() {
+        objCTLIO.checkOnline(function(err, bolResult) {
+            if (bolResult) {
+                console.log(' 完成初始化 ');
+                funGoPro();
+                funVerifyProxy();
+                funGoRandPro();
+            } else {
+                intRetry++;
+                console.log(' 第 ' + intRetry + ' 次尝试启动');
+                setTimeout(funStarMain, 1000);
+            };
+        });
+    };
 };
 
 function funGoPro() {

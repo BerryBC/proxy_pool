@@ -16,6 +16,14 @@ class cMongodbIO {
         const that = this;
         that.dbSet = objDBSet;
         that.strMGUrl = 'mongodb://' + that.dbSet.user + ':' + that.dbSet.pw + '@localhost:' + that.dbSet.host + '/' + that.dbSet.dbName;
+        that.clientMongo = null;
+        MongoClient.connect(that.strMGUrl, { poolSize: 100 }, function(err, client) {
+            if (!err) {
+                that.clientMongo = client;
+            } else {
+                console.log('error:in connect to MongoDB, err : ' + err);
+            };
+        });
     };
     /**
      *插入一个代理到Mongodb存储器中。
@@ -30,24 +38,25 @@ class cMongodbIO {
             that.checkProxyExist(objProxy, (errCheck, resultCheck) => {
                 if (!errCheck) {
                     if (!resultCheck) {
-                        MongoClient.connect(that.strMGUrl, function(err, client) {
+                        // MongoClient.connect(that.strMGUrl, function(err, client) {
+
+                        // if (!err) {
+                        const db = that.clientMongo.db(that.dbSet.dbName);
+                        db.collection(that.dbSet.col).insertOne(objProxy, function(err, res) {
+                            // client.logout();
+                            // client.close();
                             if (!err) {
-                                const db = client.db(that.dbSet.dbName);
-                                db.collection(that.dbSet.col).insertOne(objProxy, function(err, res) {
-                                    client.logout();
-                                    client.close();
-                                    if (!err) {
-                                        funCB(null, true);
-                                    } else {
-                                        funCB('error:in "saveOneProxyMongodb" after insert, err : ' + err);
-                                    };
-                                });
+                                funCB(null, true);
                             } else {
-                                client.logout();
-                                client.close();
-                                funCB('error:in "saveOneProxyMongodb" after connect, err : ' + err);
+                                funCB('error:in "saveOneProxyMongodb" after insert, err : ' + err);
                             };
                         });
+                        // } else {
+                        //     client.logout();
+                        //     client.close();
+                        //     funCB('error:in "saveOneProxyMongodb" after connect, err : ' + err);
+                        // };
+                        // });
                     };
                 } else {
                     funCB(errCheck);
@@ -66,28 +75,28 @@ class cMongodbIO {
     checkProxyExist(objProxy = {}, funCB) {
         if (Object.keys(objProxy).length) {
             const that = this;
-            MongoClient.connect(that.strMGUrl, function(err, client) {
+            // MongoClient.connect(that.strMGUrl, function(err, client) {
+            // if (!err) {
+            const db = that.clientMongo.db(that.dbSet.dbName);
+            db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
+                // client.logout();
+                // client.close();
                 if (!err) {
-                    const db = client.db(that.dbSet.dbName);
-                    db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
-                        client.logout();
-                        client.close();
-                        if (!err) {
-                            if (!!item) {
-                                funCB(null, true);
-                            } else {
-                                funCB(null, false);
-                            };
-                        } else {
-                            funCB('error:in "checkProxyExistMongodb" after find, err : ' + err);
-                        };
-                    });
+                    if (!!item) {
+                        funCB(null, true);
+                    } else {
+                        funCB(null, false);
+                    };
                 } else {
-                    client.logout();
-                    client.close();
-                    funCB('error:in "checkProxyExistMongodb" after connect, err : ' + err);
+                    funCB('error:in "checkProxyExistMongodb" after find, err : ' + err);
                 };
             });
+            // } else {
+            //     client.logout();
+            //     client.close();
+            //     funCB('error:in "checkProxyExistMongodb" after connect, err : ' + err);
+            // };
+            // });
         } else {
             funCB('error:in "checkProxyExistMongodb" , err : 没有传入代理信息');
         };
@@ -110,32 +119,32 @@ class cMongodbIO {
      */
     loadEveryProxy(funCB) {
         const that = this;
-        MongoClient.connect(that.strMGUrl, function(err, client) {
+        // MongoClient.connect(that.strMGUrl, function(err, client) {
+        // if (!err) {
+        const db = that.clientMongo.db(that.dbSet.dbName);
+        db.collection(that.dbSet.col).find({}).toArray(function(err, item) {
+            // client.logout();
+            // client.close();
             if (!err) {
-                const db = client.db(that.dbSet.dbName);
-                db.collection(that.dbSet.col).find({}).toArray(function(err, item) {
-                    client.logout();
-                    client.close();
-                    if (!err) {
-                        if (!!item) {
-                            let arrProxyBack = [];
-                            for (const objProxyInMDB of item) {
-                                arrProxyBack.push(common.funObj2Str(objProxyInMDB));
-                            }
-                            funCB(null, arrProxyBack);
-                        } else {
-                            funCB(null, false);
-                        };
-                    } else {
-                        funCB('error:in "loadEveryProxyMongodb" after find, err : ' + err);
-                    };
-                });
+                if (!!item) {
+                    let arrProxyBack = [];
+                    for (const objProxyInMDB of item) {
+                        arrProxyBack.push(common.funObj2Str(objProxyInMDB));
+                    }
+                    funCB(null, arrProxyBack);
+                } else {
+                    funCB(null, false);
+                };
             } else {
-                client.logout();
-                client.close();
-                funCB('error:in "loadEveryProxyMongodb" after connect, err : ' + err);
+                funCB('error:in "loadEveryProxyMongodb" after find, err : ' + err);
             };
         });
+        //     } else {
+        //         client.logout();
+        //         client.close();
+        //         funCB('error:in "loadEveryProxyMongodb" after connect, err : ' + err);
+        //     };
+        // });
     }
 
     /**
@@ -148,20 +157,20 @@ class cMongodbIO {
         const that = this;
         if (Object.keys(objProxy).length) {
             const that = this;
-            MongoClient.connect(that.strMGUrl, function(err, client) {
-                if (!err) {
-                    const db = client.db(that.dbSet.dbName);
-                    db.collection(that.dbSet.col).deleteOne({ u: objProxy.u, p: objProxy.p }, function(err, item) {
-                        client.logout();
-                        client.close();
-                        funCB(null, true);
-                    });
-                } else {
-                    client.logout();
-                    client.close();
-                    funCB('error:in "deleteOneProxyMongodb" after connect, err : ' + err);
-                }
+            // MongoClient.connect(that.strMGUrl, function(err, client) {
+            //     if (!err) {
+            const db = that.clientMongo.db(that.dbSet.dbName);
+            db.collection(that.dbSet.col).deleteOne({ u: objProxy.u, p: objProxy.p }, function(err, item) {
+                // client.logout();
+                // client.close();
+                funCB(null, true);
             });
+            //     } else {
+            //         client.logout();
+            //         client.close();
+            //         funCB('error:in "deleteOneProxyMongodb" after connect, err : ' + err);
+            //     }
+            // });
         } else {
             funCB('error:in "deleteOneProxyMongodb" , err : 没有传入代理信息');
         }
@@ -177,46 +186,46 @@ class cMongodbIO {
     updateProxyFailTime(objProxy, intMaxFailTime, funCB) {
         if (Object.keys(objProxy).length) {
             const that = this;
-            MongoClient.connect(that.strMGUrl, function(err, client) {
+            // MongoClient.connect(that.strMGUrl, function(err, client) {
+            //     if (!err) {
+            const db = that.clientMongo.db(that.dbSet.dbName);
+            db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
                 if (!err) {
-                    const db = client.db(that.dbSet.dbName);
-                    db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
-                        if (!err) {
-                            if (!!item) {
-                                let bolCDel = false;
-                                if (item.fail >= 0) {
-                                    if (item.fail < intMaxFailTime) {
-                                        let intNowFail = item.fail + 1;
-                                        const db = client.db(that.dbSet.dbName);
-                                        db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": intNowFail } }, function(err, item) {
-                                            client.logout();
-                                            client.close();
-                                        });
-                                        bolCDel = false;
-                                    } else {
-                                        bolCDel = true;
-                                    };
-                                } else {
-                                    bolCDel = true;
-                                };
-                                if (bolCDel) {
-                                    that.deleteOneProxy(objProxy, funCB);
-                                } else {
-                                    funCB(null, true);
-                                };
+                    if (!!item) {
+                        let bolCDel = false;
+                        if (item.fail >= 0) {
+                            if (item.fail < intMaxFailTime) {
+                                let intNowFail = item.fail + 1;
+                                const db = that.clientMongo.db(that.dbSet.dbName);
+                                db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": intNowFail } }, function(err, item) {
+                                    // client.logout();
+                                    // client.close();
+                                });
+                                bolCDel = false;
                             } else {
-                                funCB(null, false);
+                                bolCDel = true;
                             };
                         } else {
-                            funCB('error:in "updateProxyFailTime" after find, err : ' + err);
+                            bolCDel = true;
                         };
-                    });
+                        if (bolCDel) {
+                            that.deleteOneProxy(objProxy, funCB);
+                        } else {
+                            funCB(null, true);
+                        };
+                    } else {
+                        funCB(null, false);
+                    };
                 } else {
-                    client.logout();
-                    client.close();
-                    funCB('error:in "updateProxyFailTime" after connect, err : ' + err);
+                    funCB('error:in "updateProxyFailTime" after find, err : ' + err);
                 };
             });
+            //     } else {
+            //         client.logout();
+            //         client.close();
+            //         funCB('error:in "updateProxyFailTime" after connect, err : ' + err);
+            //     };
+            // });
         } else {
             funCB('error:in "updateProxyFailTime" , err : 没有传入代理信息');
         };
@@ -231,36 +240,44 @@ class cMongodbIO {
     cleanProxyFailTime(objProxy, funCB) {
         if (Object.keys(objProxy).length) {
             const that = this;
-            MongoClient.connect(that.strMGUrl, function(err, client) {
+            // MongoClient.connect(that.strMGUrl, function(err, client) {
+            //     if (!err) {
+            const db = that.clientMongo.db(that.dbSet.dbName);
+            db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
                 if (!err) {
-                    const db = client.db(that.dbSet.dbName);
-                    db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
-                        if (!err) {
-                            if (!!item) {
-                                if (item.fail > 0) {
-                                    const db = client.db(that.dbSet.dbName);
-                                    db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": 0 } }, function(err, item) {
-                                        client.logout();
-                                        client.close();
-                                    });
-                                };
-                                funCB(null, true);
-                            } else {
-                                funCB(null, false);
-                            };
-                        } else {
-                            funCB('error:in "cleanProxyFailTime" after find, err : ' + err);
+                    if (!!item) {
+                        if (item.fail > 0) {
+                            const db = that.clientMongo.db(that.dbSet.dbName);
+                            db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": 0 } }, function(err, item) {
+                                // client.logout();
+                                // client.close();
+                            });
                         };
-                    });
+                        funCB(null, true);
+                    } else {
+                        funCB(null, false);
+                    };
                 } else {
-                    client.logout();
-                    client.close();
-                    funCB('error:in "cleanProxyFailTime" after connect, err : ' + err);
+                    funCB('error:in "cleanProxyFailTime" after find, err : ' + err);
                 };
             });
+            //     } else {
+            //         client.logout();
+            //         client.close();
+            //         funCB('error:in "cleanProxyFailTime" after connect, err : ' + err);
+            //     };
+            // });
         } else {
             funCB('error:in "cleanProxyFailTime" , err : 没有传入代理信息');
         };
+    };
+    checkOnline(funCB) {
+        const that = this;
+        if (!that.clientMongo) {
+            funCB(null, false);
+        } else {
+            funCB(null, true);
+        }
     };
 }
 

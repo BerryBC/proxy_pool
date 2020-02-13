@@ -4,7 +4,7 @@
  * @Version: 0.1.1
  * @Date: 2019-01-23 09:28:35
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-01-29 18:32:17
+ * @LastEditTime : 2020-02-13 20:30:32
  */
 //需要下载的库
 const async = require('async');
@@ -210,6 +210,24 @@ class cControllerIO {
             } else {
                 funCB(err);
             }
+        });
+    };
+    checkOnline(funCB) {
+        const that = this;
+        let arrFun = [];
+        for (let intI = 0; intI < that.objCTLIOMethod.length; intI++) {
+            arrFun.push((funCB) => {
+                that.objCTLIOMethod[intI].checkOnline(funCB);
+            });
+        }
+        async.parallel(arrFun, (err, result) => {
+            // let dictProxyCheckDup = [];
+            // let arrOutput = [];
+            let bolAllOL = true;
+            for (const bolOnline of result) {
+                bolAllOL = bolAllOL && bolOnline;
+            };
+            funCB(err, bolAllOL);
         });
     };
 };
