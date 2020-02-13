@@ -279,6 +279,22 @@ class cMongodbIO {
             funCB(null, true);
         }
     };
+    reTryLink(funCB) {
+        const that = this;
+        that.strMGUrl = 'mongodb://' + that.dbSet.user + ':' + that.dbSet.pw + '@localhost:' + that.dbSet.host + '/' + that.dbSet.dbName;
+        that.clientMongo = null;
+        MongoClient.connect(that.strMGUrl, { poolSize: 100 }, function(err, client) {
+            if (!err) {
+                that.clientMongo = client;
+                funCB(err, false);
+            } else {
+                setTimeout(() => {
+                    console.log('error:in connect to MongoDB, err : ' + err);
+                    that.reTryLink(funCB);
+                }, 3000);
+            };
+        });
+    };
 }
 
 module.exports = cMongodbIO;
