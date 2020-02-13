@@ -239,7 +239,7 @@ class cMongodbIO {
                                 if (item.fail > 0) {
                                     const db = client.db(that.dbSet.dbName);
                                     db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": 0 } });
-                                    db.close();
+                                    // db.close();
                                     client.logout();
                                     client.close();
                                 };
