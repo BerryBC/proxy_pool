@@ -188,9 +188,10 @@ class cMongodbIO {
                                     if (item.fail < intMaxFailTime) {
                                         let intNowFail = item.fail + 1;
                                         const db = client.db(that.dbSet.dbName);
-                                        db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": intNowFail } });
-                                        client.logout();
-                                        client.close();
+                                        db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": intNowFail } }, function(err, item) {
+                                            client.logout();
+                                            client.close();
+                                        });
                                         bolCDel = false;
                                     } else {
                                         bolCDel = true;
@@ -238,10 +239,10 @@ class cMongodbIO {
                             if (!!item) {
                                 if (item.fail > 0) {
                                     const db = client.db(that.dbSet.dbName);
-                                    db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": 0 } });
-                                    // db.close();
-                                    client.logout();
-                                    client.close();
+                                    db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": 0 } }, function(err, item) {
+                                        client.logout();
+                                        client.close();
+                                    });
                                 };
                                 funCB(null, true);
                             } else {
