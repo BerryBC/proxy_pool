@@ -4,7 +4,7 @@
  * @Version: 0.2.0
  * @Date: 2019-01-20 22:32:21
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-02-13 21:01:53
+ * @LastEditTime : 2020-02-14 00:24:35
  */
 //需要下载的库
 const async = require('async');
@@ -50,7 +50,7 @@ function funInit() {
             } else {
                 intRetry++;
                 console.log(' 第 ' + intRetry + ' 次尝试启动');
-                setTimeout(funStarMain, 1000);
+                setTimeout(funStarMain, 3000);
             };
         });
     };
