@@ -34,6 +34,7 @@ class cMongodbIO {
                             if (!err) {
                                 const db = client.db(that.dbSet.dbName);
                                 db.collection(that.dbSet.col).insertOne(objProxy, function(err, res) {
+                                    client.logout();
                                     client.close();
                                     if (!err) {
                                         funCB(null, true);
@@ -42,6 +43,7 @@ class cMongodbIO {
                                     };
                                 });
                             } else {
+                                client.logout();
                                 client.close();
                                 funCB('error:in "saveOneProxyMongodb" after connect, err : ' + err);
                             };
@@ -68,6 +70,7 @@ class cMongodbIO {
                 if (!err) {
                     const db = client.db(that.dbSet.dbName);
                     db.collection(that.dbSet.col).findOne({ u: objProxy.u, p: objProxy.p }, {}, function(err, item) {
+                        client.logout();
                         client.close();
                         if (!err) {
                             if (!!item) {
@@ -80,6 +83,7 @@ class cMongodbIO {
                         };
                     });
                 } else {
+                    client.logout();
                     client.close();
                     funCB('error:in "checkProxyExistMongodb" after connect, err : ' + err);
                 };
@@ -110,6 +114,7 @@ class cMongodbIO {
             if (!err) {
                 const db = client.db(that.dbSet.dbName);
                 db.collection(that.dbSet.col).find({}).toArray(function(err, item) {
+                    client.logout();
                     client.close();
                     if (!err) {
                         if (!!item) {
@@ -126,6 +131,7 @@ class cMongodbIO {
                     };
                 });
             } else {
+                client.logout();
                 client.close();
                 funCB('error:in "loadEveryProxyMongodb" after connect, err : ' + err);
             };
@@ -146,10 +152,12 @@ class cMongodbIO {
                 if (!err) {
                     const db = client.db(that.dbSet.dbName);
                     db.collection(that.dbSet.col).deleteOne({ u: objProxy.u, p: objProxy.p }, function(err, item) {
+                        client.logout();
                         client.close();
                         funCB(null, true);
                     });
                 } else {
+                    client.logout();
                     client.close();
                     funCB('error:in "deleteOneProxyMongodb" after connect, err : ' + err);
                 }
@@ -181,6 +189,7 @@ class cMongodbIO {
                                         let intNowFail = item.fail + 1;
                                         const db = client.db(that.dbSet.dbName);
                                         db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": intNowFail } });
+                                        client.logout();
                                         client.close();
                                         bolCDel = false;
                                     } else {
@@ -202,6 +211,7 @@ class cMongodbIO {
                         };
                     });
                 } else {
+                    client.logout();
                     client.close();
                     funCB('error:in "updateProxyFailTime" after connect, err : ' + err);
                 };
@@ -229,6 +239,8 @@ class cMongodbIO {
                                 if (item.fail > 0) {
                                     const db = client.db(that.dbSet.dbName);
                                     db.collection(that.dbSet.col).updateOne({ u: objProxy.u, p: objProxy.p }, { $set: { "fail": 0 } });
+                                    db.close();
+                                    client.logout();
                                     client.close();
                                 };
                                 funCB(null, true);
@@ -240,6 +252,7 @@ class cMongodbIO {
                         };
                     });
                 } else {
+                    client.logout();
                     client.close();
                     funCB('error:in "cleanProxyFailTime" after connect, err : ' + err);
                 };
