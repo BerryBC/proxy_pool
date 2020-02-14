@@ -17,7 +17,7 @@ class cMongodbIO {
         that.dbSet = objDBSet;
         that.strMGUrl = 'mongodb://' + that.dbSet.user + ':' + that.dbSet.pw + '@localhost:' + that.dbSet.host + '/' + that.dbSet.dbName;
         that.clientMongo = null;
-        MongoClient.connect(that.strMGUrl, { poolSize: 50, keepAlive: false, reconnectTries: 100, reconnectInterval: 30 }, function(err, client) {
+        MongoClient.connect(that.strMGUrl, { poolSize: 50, keepAlive: false, reconnectTries: 100, reconnectInterval: 30, useNewUrlParser: true }, function(err, client) {
             if (!err) {
                 that.clientMongo = client;
             } else {
@@ -122,7 +122,7 @@ class cMongodbIO {
         // MongoClient.connect(that.strMGUrl, function(err, client) {
         // if (!err) {
         const db = that.clientMongo.db(that.dbSet.dbName);
-        db.collection(that.dbSet.col).find({}).toArray(function(err, item) {
+        db.collection(that.dbSet.col).find({}, { 'noCursorTimeout': true }).toArray(function(err, item) {
             // client.logout();
             // client.close();
             if (!err) {
