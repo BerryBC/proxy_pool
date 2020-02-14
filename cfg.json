@@ -3,8 +3,11 @@
         "proxyWebSite": [
             "https://www.kuaidaili.com/free/inha/*/",
             "http://www.89ip.cn/index_*.html",
-            "https://www.xicidaili.com/nn/*"
-
+            "https://www.xicidaili.com/nn/*",
+            "http://www.nimadaili.com/gaoni/*/",
+            "http://qinghuadaili.com/free/*/",
+            "https://www.7yip.cn/free/?action=china&page=*",
+            "http://www.aiblv.com?q=*/"
         ],
         "numOfPages": 6,
         "timeoutSet": 3000,
