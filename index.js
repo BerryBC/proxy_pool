@@ -1,10 +1,10 @@
 /*
  * @Descripttion: 简易代理池主程序
  * @Author: BerryBC
- * @Version: 0.2.0
+ * @Version: 0.3.0
  * @Date: 2019-01-20 22:32:21
  * @LastEditors  : BerryBC
- * @LastEditTime : 2020-02-14 22:40:06
+ * @LastEditTime : 2020-02-14 23:05:25
  */
 //需要下载的库
 // const async = require('async');
@@ -80,6 +80,7 @@ function funGoRandPro() {
 };
 
 function timeToGoRandPro() {
+    // console.log('时间到了，执行随机测试网上服务器')
     funGoRandPro();
 };
 
