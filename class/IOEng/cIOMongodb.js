@@ -122,9 +122,11 @@ class cMongodbIO {
         // MongoClient.connect(that.strMGUrl, function(err, client) {
         // if (!err) {
         const db = that.clientMongo.db(that.dbSet.dbName);
-        db.collection(that.dbSet.col).find({}, { 'noCursorTimeout': true }).toArray(function(err, item) {
+        let curFind = db.collection(that.dbSet.col).find({}, { 'noCursorTimeout': true })
+        curFind.toArray(function(err, item) {
             // client.logout();
             // client.close();
+            curFind.close();
             if (!err) {
                 if (!!item) {
                     let arrProxyBack = [];

@@ -3,7 +3,7 @@
  * @Version: 0.1.1
  * @Author: BerryBC
  * @Date: 2019-01-23 09:31:36
- * @LastEditors  : BerryBC
+ * @LastEditors: BerryBC
  * @LastEditTime : 2020-02-14 22:32:27
  */
 //需要下载的库
@@ -143,7 +143,7 @@ class cControllerRequest {
             });
         };
         let arrRandProxy = [];
-        for (let intJ = 0; intJ < 100; intJ++) {
+        for (let intJ = 0; intJ < 1000; intJ++) {
             let strTestingIP = (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString() + "." + (Math.floor(Math.random() * 255)).toString();
             arrRandProxy.push(strTestingIP);
         }
