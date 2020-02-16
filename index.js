@@ -3,7 +3,7 @@
  * @Author: BerryBC
  * @Version: 0.3.0
  * @Date: 2019-01-20 22:32:21
- * @LastEditors  : BerryBC
+ * @LastEditors: BerryBC
  * @LastEditTime : 2020-02-14 23:05:25
  */
 //需要下载的库
@@ -75,7 +75,7 @@ function funGoRandPro() {
         console.log((new Date().toString()) + ' 完成了随机测试网上服务器。');
         setTimeout(() => {
             timeToGoRandPro();
-        }, (1000 * 60 * (objTimeConfig.spy[0] + Math.random() * objTimeConfig.spy[1])));
+        }, (1000 * 60 * 60 * (objTimeConfig.testrand[0] + Math.random() * objTimeConfig.testrand[1])));
     });
 };
 

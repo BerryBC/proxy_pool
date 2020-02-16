@@ -131,6 +131,7 @@ class cControllerRequest {
         const that = this;
         let funGoRandSpy = (strRandProxy, funCB) => {
             // 上网看到很多高匿的代理都是9999端口的，就尝试一下随机测试网上所有9999端口呗
+            // 排查端口指令 sudo netstat -tnlpoa|grep 9999|wc -l
             let strProxy = 'http://' + strRandProxy + ':9999';
             // console.log('  testing :' + strProxy);
             request.get('https://www.baidu.com').timeout({ response: that.intTimeout, deadline: that.intTimeout * 3 }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
