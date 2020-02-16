@@ -122,7 +122,7 @@ class cMongodbIO {
         // MongoClient.connect(that.strMGUrl, function(err, client) {
         // if (!err) {
         const db = that.clientMongo.db(that.dbSet.dbName);
-        let curFind = db.collection(that.dbSet.col).find({}, { 'noCursorTimeout': true })
+        let curFind = db.collection(that.dbSet.col).find({}, { 'noCursorTimeout': false, 'timeout': true })
         curFind.toArray(function(err, item) {
             // client.logout();
             // client.close();
