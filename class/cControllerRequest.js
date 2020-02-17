@@ -111,7 +111,6 @@ class cControllerRequest {
         let that = this;
         let funCheck = function(item, funCB) {
             let strProxy = 'http://' + item;
-            // let strProxy = 'http://122.51.158.193:31988';
             request.get('https://www.baidu.com').timeout({ response: that.intTimeout, deadline: that.intTimeout * 3 }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
                 let objProxy = common.funStr2Obj(item);
                 ctlIO.cleanProxyFailTime(objProxy);
