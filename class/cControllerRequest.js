@@ -10,6 +10,7 @@
 const async = require('async');
 const superagentCheerio = require('superagent-cheerio');
 const request = require('superagent');
+require('superagent-proxy')(request);
 
 //自编库
 const common = require('./cCommon.js');
@@ -51,14 +52,18 @@ class cControllerRequest {
                     that.cookies[objWhatWeb.ws] = common.renewCookies(that.cookies[objWhatWeb.ws], res.header['set-cookie']);
                 };
                 let strTableContent = res.$('table').text();
-                let arrProxyList = strTableContent.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}[\n\s]*\d{1,4}/g);
+                let arrProxyList = strTableContent.match(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}[\n\s:]*\d{1,4}/g);
                 for (const strOneProxy of arrProxyList) {
                     let arrReshapeProxy = strOneProxy.replace(/\s+/g, ':').split(':');
-                    let objProxyForSave = { u: arrReshapeProxy[0], p: arrReshapeProxy[1] };
-                    objCTLSave.saveOneProxy(objProxyForSave, () => {
-                        //It will do nothing.
-                        //But um....OK, give it a callback.
-                    });
+                    if (arrReshapeProxy[1] != null) {
+                        let objProxyForSave = { u: arrReshapeProxy[0], p: arrReshapeProxy[1] };
+                        objCTLSave.saveOneProxy(objProxyForSave, () => {
+                            //It will do nothing.
+                            //But um....OK, give it a callback.
+                        });
+                    } else {
+                        console.log(strWebURL + ' : ' + arrReshapeProxy)
+                    };
                 }
                 // console.log('完成 ' + strWebURL + ' 的捉取，捉取到 ' + arrProxyList.length)
                 setTimeout(() => {
@@ -106,6 +111,7 @@ class cControllerRequest {
         let that = this;
         let funCheck = function(item, funCB) {
             let strProxy = 'http://' + item;
+            // let strProxy = 'http://122.51.158.193:31988';
             request.get('https://www.baidu.com').timeout({ response: that.intTimeout, deadline: that.intTimeout * 3 }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
                 let objProxy = common.funStr2Obj(item);
                 ctlIO.cleanProxyFailTime(objProxy);

@@ -10,7 +10,7 @@
             "http://www.aiblv.com?q=*/"
         ],
         "numOfPages": 6,
-        "timeoutSet": 3000,
+        "timeoutSet": 10000,
         "UserAgent": [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.64 Safari/537.36",
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134",
@@ -43,7 +43,7 @@
     }],
     "timeConfig": {
         "spy": [
-            2,
+            6,
             1
         ],
         "verify": [
@@ -51,8 +51,8 @@
             0.5
         ],
         "testrand": [
-            0.5,
-            0.5
+            0.1,
+            0.1
         ],
         "Descripttion": [
             "单位为小时，",
