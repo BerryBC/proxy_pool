@@ -4,7 +4,7 @@
  * @Author: BerryBC
  * @Date: 2019-01-23 09:31:36
  * @LastEditors: BerryBC
- * @LastEditTime : 2020-02-14 22:32:27
+ * @LastEditTime: 2020-02-18 13:06:37
  */
 //需要下载的库
 const async = require('async');
@@ -61,8 +61,8 @@ class cControllerRequest {
                             //It will do nothing.
                             //But um....OK, give it a callback.
                         });
-                    } else {
-                        console.log(strWebURL + ' : ' + arrReshapeProxy)
+                        // } else {
+                        //     console.log(strWebURL + ' : ' + arrReshapeProxy)
                     };
                 }
                 // console.log('完成 ' + strWebURL + ' 的捉取，捉取到 ' + arrProxyList.length)
