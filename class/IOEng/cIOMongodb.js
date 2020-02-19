@@ -17,7 +17,7 @@ class cMongodbIO {
         that.dbSet = objDBSet;
         that.strMGUrl = 'mongodb://' + that.dbSet.user + ':' + that.dbSet.pw + '@localhost:' + that.dbSet.host + '/' + that.dbSet.dbName;
         that.clientMongo = null;
-        MongoClient.connect(that.strMGUrl, { poolSize: 50, keepAlive: false, reconnectTries: 100, reconnectInterval: 30, useNewUrlParser: true }, function(err, client) {
+        MongoClient.connect(that.strMGUrl, { poolSize: 5, keepAlive: false, reconnectTries: 10, reconnectInterval: 10000, useNewUrlParser: true, useUnifiedTopology: true }, function(err, client) {
             if (!err) {
                 that.clientMongo = client;
             } else {
