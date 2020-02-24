@@ -4,7 +4,7 @@
  * @Author: BerryBC
  * @Date: 2019-01-23 09:31:36
  * @LastEditors: BerryBC
- * @LastEditTime: 2020-02-18 13:06:37
+ * @LastEditTime: 2020-02-24 21:17:19
  */
 //需要下载的库
 const async = require('async');
@@ -114,14 +114,18 @@ class cControllerRequest {
             request.get('https://www.baidu.com').timeout({ response: that.intTimeout, deadline: that.intTimeout * 3 }).use(superagentCheerio).proxy(strProxy).set(that.objHeader).then((res) => {
                 let objProxy = common.funStr2Obj(item);
                 ctlIO.cleanProxyFailTime(objProxy);
-                funCB(null, true);
+                setTimeout(() => {
+                    funCB(null, true);
+                }, 10 + Math.random() * 10);
             }).catch((err) => {
                 let objProxy = common.funStr2Obj(item);
                 ctlIO.updateProxyFailTime(objProxy);
-                funCB(null, true);
+                setTimeout(() => {
+                    funCB(null, true);
+                }, 10 + Math.random() * 10);
             });
         };
-        async.eachLimit(arrProxy, 6, funCheck, (err) => {
+        async.eachLimit(arrProxy, 5, funCheck, (err) => {
             funCB(err, true);
         });
     };
