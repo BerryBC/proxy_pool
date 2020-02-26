@@ -4,7 +4,7 @@
  * @Author: BerryBC
  * @Date: 2019-01-23 09:31:36
  * @LastEditors: BerryBC
- * @LastEditTime: 2020-02-25 15:35:02
+ * @LastEditTime: 2020-02-26 20:26:29
  */
 //需要下载的库
 const async = require('async');
@@ -116,13 +116,13 @@ class cControllerRequest {
                 ctlIO.cleanProxyFailTime(objProxy);
                 setTimeout(() => {
                     funCB(null, true);
-                }, 1 + Math.random() * 1);
+                }, 10 + Math.random() * 10);
             }).catch((err) => {
                 let objProxy = common.funStr2Obj(item);
                 ctlIO.updateProxyFailTime(objProxy);
                 setTimeout(() => {
                     funCB(null, true);
-                }, 1 + Math.random() * 1);
+                }, 10 + Math.random() * 10);
             });
         };
         async.eachLimit(arrProxy, 5, funCheck, (err) => {
