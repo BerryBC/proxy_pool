@@ -60,7 +60,7 @@
             "其中'spy'为隔多长时间爬一次，'verify'为隔多长时间验证一次"
         ]
     },
-    "MaxFailTime": 50,
+    "MaxFailTime": 15,
     "Comment": {
         "ForsaveSet": ", {'libPath': '/IOEng //cIOJSON.js','file': '../../proxy.json'}"
     }
