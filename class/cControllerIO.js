@@ -49,6 +49,7 @@ class cControllerIO {
                 funCB(err);
             };
         });
+        arrFun = null;
     }
 
     /**
@@ -76,6 +77,7 @@ class cControllerIO {
                 funCB(err);
             }
         });
+        arrFun = null;
     }
 
     /**
@@ -102,6 +104,7 @@ class cControllerIO {
                 funCB(err);
             }
         });
+        arrFun = null;
     };
 
     /**
@@ -130,6 +133,7 @@ class cControllerIO {
             }
             funCB(err, arrOutput);
         });
+        arrFun = null;
     }
 
     /**
@@ -157,6 +161,7 @@ class cControllerIO {
                 funCB(err);
             }
         });
+        arrFun = null;
     };
 
     /**
@@ -184,6 +189,7 @@ class cControllerIO {
                 funCB(err);
             }
         });
+        arrFun = null;
     };
 
     /**
@@ -211,6 +217,7 @@ class cControllerIO {
                 funCB(err);
             }
         });
+        arrFun = null;
     };
     checkOnline(funCB) {
         const that = this;
@@ -229,6 +236,7 @@ class cControllerIO {
             };
             funCB(err, bolAllOL);
         });
+        arrFun = null;
     };
 };
 module.exports = cControllerIO;
