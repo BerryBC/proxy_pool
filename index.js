@@ -4,7 +4,7 @@
  * @Version: 0.3.0
  * @Date: 2019-01-20 22:32:21
  * @LastEditors: BerryBC
- * @LastEditTime: 2020-05-08 23:18:37
+ * @LastEditTime: 2020-05-10 20:40:19
  */
 //需要下载的库
 // const async = require('async');
@@ -47,7 +47,7 @@ function funInit() {
                 console.log(' 完成初始化 ');
                 timeToGoPro();
                 timeToVerifyProxy();
-                timeToGoRandPro();
+                // timeToGoRandPro();
             } else {
                 intRetry++;
                 console.log(' 第 ' + intRetry + ' 次尝试启动');

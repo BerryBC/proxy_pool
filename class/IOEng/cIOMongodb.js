@@ -127,6 +127,7 @@ class cMongodbIO {
             // client.logout();
             // client.close();
             curFind.close();
+            curFind = null;
             if (!err) {
                 if (!!item) {
                     let arrProxyBack = [];
