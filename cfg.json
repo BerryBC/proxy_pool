@@ -9,7 +9,7 @@
             "https://www.7yip.cn/free/?action=china&page=*",
             "http://www.aiblv.com?q=*/"
         ],
-        "numOfPages": 3,
+        "numOfPages": 1,
         "timeoutSet": 10000,
         "UserAgent": [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.64 Safari/537.36",
@@ -60,7 +60,7 @@
             "其中'spy'为隔多长时间爬一次，'verify'为隔多长时间验证一次"
         ]
     },
-    "MaxFailTime": 3,
+    "MaxFailTime": 2,
     "Comment": {
         "ForsaveSet": ", {'libPath': '/IOEng //cIOJSON.js','file': '../../proxy.json'}"
     }
